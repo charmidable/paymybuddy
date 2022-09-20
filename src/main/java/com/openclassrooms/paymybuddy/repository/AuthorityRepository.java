@@ -1,7 +1,7 @@
 package com.openclassrooms.paymybuddy.repository;
 
 
-import com.openclassrooms.paymybuddy.Entities.Authority;
+import com.openclassrooms.paymybuddy.entities.Authority;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

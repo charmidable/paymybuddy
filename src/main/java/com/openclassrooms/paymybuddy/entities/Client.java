@@ -1,6 +1,10 @@
-package com.openclassrooms.paymybuddy.Entities;
+package com.openclassrooms.paymybuddy.entities;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -21,21 +25,21 @@ public class Client
     @Column(name = "email")
     private String email;
 
-    @ManyToMany
+    @OneToOne(mappedBy = "client")
+    private Account account;
+
+
+    @ManyToMany//(fetch = FetchType.EAGER)
     @JoinTable
     (
         name               = "connection",
         joinColumns        = @JoinColumn(name="connect"),
         inverseJoinColumns = @JoinColumn(name="client")
     )
-    private List<Client> connections;
+    private List<Connection> connections;
 
 
-
-    @OneToOne(mappedBy = "client")
-    private Account account;
-
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable
     (
         name               = "role",
@@ -69,6 +73,7 @@ public class Client
         this.name = name;
     }
 
+    @JsonIgnore
     public String getPassword()
     {
         return password;
@@ -89,16 +94,18 @@ public class Client
         this.email = email;
     }
 
-    public List<Client> getConnections()
+    @Transactional
+    public List<Connection> getConnections()
     {
         return connections;
     }
 
-    public void setConnections(List<Client> connection)
+    public void setConnections(List<Connection> connection)
     {
         this.connections = connection;
     }
 
+    @JsonIgnore
     public Account getAccount()
     {
         return account;
@@ -109,6 +116,17 @@ public class Client
         this.account = account;
     }
 
+    public Integer getAccountId()
+    {
+        return account.getId();
+    }
+
+    public BigDecimal getBalance()
+    {
+        return account.getBalance();
+    }
+
+    @JsonIgnore
     public List<Authority> getRoles()
     {
         return roles;
@@ -119,12 +137,14 @@ public class Client
         this.roles = role;
     }
 
-
+    public List<Transaction> getTransactions()
+    {
+        return account.getTransactions();
+    }
 
     //  =========================
     //  =    Object Methods     =
     //  =========================
-
 
     @Override
     public String toString()

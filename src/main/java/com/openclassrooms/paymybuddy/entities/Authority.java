@@ -1,4 +1,4 @@
-package com.openclassrooms.paymybuddy.Entities;
+package com.openclassrooms.paymybuddy.entities;
 
 import javax.persistence.*;
 
@@ -18,7 +18,6 @@ public class Authority
     //=========================
     //=   Getters & Setters   =
     //=========================
-
 
     public String getName()
     {

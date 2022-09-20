@@ -25,6 +25,8 @@ CREATE TABLE connection
     FOREIGN KEY (connect)    REFERENCES client (id)
 );
 
+
+
 CREATE TABLE authority
 (
     id                       INT         NOT NULL AUTO_INCREMENT,
@@ -47,7 +49,7 @@ CREATE TABLE account
 (
     id                       INT         NOT NULL AUTO_INCREMENT,
     client                   INT         NOT NULL,
-    amount                   NUMERIC     NOT NULL,
+    balance                  NUMERIC     NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (client)     REFERENCES client(id)
 );
@@ -56,7 +58,7 @@ CREATE TABLE account
 CREATE TABLE transaction
 (
     id                       INT           NOT NULL AUTO_INCREMENT,
---    moment                   TIMESTAMP     NOT NULL,
+    moment                   TIMESTAMP     NOT NULL,
     amount                   NUMERIC       NOT NULL,
     payer                    INT           NOT NULL,
     recipient                INT           NOT NULL,

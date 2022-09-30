@@ -1,8 +1,11 @@
 package com.openclassrooms.paymybuddy.restController;
 
 import com.openclassrooms.paymybuddy.dto.AngularTransaction;
+import com.openclassrooms.paymybuddy.entities.Account;
 import com.openclassrooms.paymybuddy.service.RestService;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.security.RolesAllowed;
 
 
 @RestController
@@ -28,29 +31,20 @@ public class RestTransactionController
     //==========================
     //=      REST Methods      =
     //==========================
-//    @GetMapping()
-//    public void newTransaction()
+//    @GetMapping("/{accountId}")
+//    public Object getTransactionsByAccountId(@PathVariable("accountId")Integer accountId)
 //    {
-//        System.out.println("******* Bonjour **********");
-//    }
-
-//    @PostMapping()
-//    public void newTransaction(@RequestBody AngularTransaction angularTransaction)
-//    {
-//        System.out.println("RestTransactionController.newTransaction CALLED");
-//        System.out.println( "angularTransaction.amount() : " + angularTransaction.amount() );
-//        System.out.println( "angularTransaction.description() : " + angularTransaction.description() );
-//        System.out.println( "angularTransaction.payerAccountId() : " + angularTransaction.payerAccountId() );
-//        System.out.println( "angularTransaction.recipientAccountId() : " + angularTransaction.recipientAccountId() );
+//        System.out.println("getTransactionsByAccountId() CALLED");
 //
-//        restService.save(angularTransaction);
+//        return restService.getTransactionsByAccountId(accountId);
 //    }
 
     @PostMapping()
-    public void newTransaction()
+    @RolesAllowed("client")
+    public Account newTransaction(@RequestBody AngularTransaction angularTransaction)
     {
-
-        System.out.println("***** @PostMapping() *******");
-//        restService.save(angularTransaction);
+        System.out.println("RestTransactionController.newTransaction CALLED");
+        restService.createTransaction(angularTransaction);
+        return restService.getTransactionsByAccountId(angularTransaction.payerAccountId());
     }
 }

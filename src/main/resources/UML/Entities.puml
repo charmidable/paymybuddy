@@ -1,0 +1,109 @@
+@startuml
+page 2x5
+
+
+
+
+class Connection
+{
+    - Integer id
+    - String name
+    - String getEmail
+    - Account getAccount
+
+    + Integer getClientId()
+    + String getName()
+    + String getEmail()
+    + Integer getAccountId()
+}
+
+'class Authority
+'{
+'    - Integer id;
+'    - String name;
+'    + Integer getId()
+'    + String getName()
+'    + void setId(Integer id)
+'    + void setName(String name)
+'}
+
+'class Account
+'{
+'    - Integer id
+'    - Client client
+'    - BigDecimal balance
+'    - List<Transaction> payers
+'    - List<Transaction> recipients
+'
+'    + Integer getId()
+'    + Client getClient()
+'    + BigDecimal getBalance()
+'    + List<Transaction> getPayers()
+'    + List<Transaction> getRecipients()
+'    + List<Transaction> getTransactions()
+'}
+
+
+'class Transaction
+'{
+'    - Integer id;
+'    - BigDecimal transactionAmount;
+'    - String description;
+'    - LocalDateTime moment;
+'    - Account payerAccount;
+'    - Account recipientAccount;
+'    - String connectionName;
+'    - BigDecimal amount;
+'
+'    + Integer getId()
+'    + void setId(Integer id)
+'    + BigDecimal getTransactionAmount()
+'    + void setTransactionAmount(BigDecimal amount)
+'    + String getDescription()
+'    + void setDescription(String description)
+'    + Account getPayerAccount()
+'    + void setPayerAccount(Account payer)
+'    + Account getRecipientAccount()
+'    + void setRecipientAccount(Account recipient)
+'    + LocalDateTime getMoment()
+'    + void setMoment(LocalDateTime moment)
+'    + String getConnectionName()
+'    + void setConnectionName(String connectionName)
+'    + BigDecimal getAmount()
+'    + void setAmount(BigDecimal amount)
+'}
+
+
+
+class Client
+{
+    - Integer id
+    - String name
+    - String password
+    - String email
+    - Account account
+    - List<Connection> connections
+    - List<Authority> roles
+
+    + Integer getId()
+    + String getName()
+    + String getEmail()
+    + Account getAccount()
+    + Integer getAccountId()
+    + BigDecimal getBalance()
+    + List<Authority> getRoles()
+    + List<Connection> getConnections()
+    + List<Transaction> getTransactions()
+    + void setId(Integer)
+    + void setName(String)
+    + void setEmail(String)
+    + void setAccount(Account)
+    + void setRoles(List<Authority>)
+    + void setConnections(List<Connection>)
+}
+
+Connection "1" -o "0-*" Client
+'Account "0-*" o- "2" Transaction
+'Client "1" *- "1" Account
+'Client "1-*" *-- "0-*" Authority
+@enduml

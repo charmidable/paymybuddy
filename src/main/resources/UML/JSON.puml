@@ -1,0 +1,50 @@
+@startjson
+'{
+' "name": "John", "email" : "john@ml.com", "password" : 123
+'}
+
+{
+    "id": 1,
+    "name": "John",
+    "email": "john@mail.ml",
+    "connections": [
+        {
+            "name": "Tim",
+            "email": "tim@mail.ml",
+            "clientId": 2,
+            "accountId": 2
+        },
+        {
+            "name": "Tom",
+            "email": "tom@mail.ml",
+            "clientId": 3,
+            "accountId": 3
+        },
+        {
+            "name": "Clara",
+            "email": "Clara@mail.ml",
+            "clientId": 6,
+            "accountId": 6
+        }
+    ],
+    "balance": 898,
+    "transactions": [
+        {
+            "description": "achat Serveur",
+            "connectionName": "Clara",
+            "amount": -2
+        },
+        {
+            "description": "movie",
+            "connectionName": "Tom",
+            "amount": 20
+        },
+        {
+            "description": "restaurant",
+            "connectionName": "Tim",
+            "amount": -40
+        }
+    ],
+    "accountId": 1
+}
+@endjson

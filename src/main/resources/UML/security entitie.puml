@@ -1,0 +1,75 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+'abstract class AbstractList
+'abstract AbstractCollection
+'interface List
+'interface Collection
+'
+'List <|-- AbstractList
+'Collection <|-- AbstractCollection
+'
+'Collection <|- List
+'AbstractCollection <|- AbstractList
+'AbstractList <|-- ArrayList
+'
+'class ArrayList {
+'Object[] elementData
+'size()
+'}
+'
+'enum TimeUnit {
+'DAYS
+'HOURS
+'MINUTES
+'}
+class SecurityUser
+{
+    - Client client;
+    + Client getClient()
+
+}
+
+class UserDetails
+{
++ SecurityUser(Client client)
+    + String getUsername()
+    + boolean isAccountNonExpired()
+    + boolean isAccountNonLocked()
+    + boolean isCredentialsNonExpired()
+    + boolean isEnabled()
+    + String getPassword()
+    + Collection<? extends GrantedAuthority> getAuthorities()
+}
+
+class Client
+{
+    - Integer id
+    - String name
+    - String password
+    - String email
+    - Account account
+    - List<Connection> connections
+    - List<Authority> roles
+
+    + Integer getId()
+    + String getName()
+    + String getEmail()
+    + Account getAccount()
+    + Integer getAccountId()
+    + BigDecimal getBalance()
+    + List<Authority> getRoles()
+    + List<Connection> getConnections()
+    + List<Transaction> getTransactions()
+    + void setId(Integer)
+    + void setName(String)
+    + void setEmail(String)
+    + void setAccount(Account)
+    + void setRoles(List<Authority>)
+    + void setConnections(List<Connection>)
+}
+
+'SecurityUser ..|> UserDetails
+UserDetails  <|.. SecurityUser
+SecurityUser "1" *- "1" Client
+@enduml

@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Comparator;
+import java.util.Objects;
 
 @Entity
 @Table(name="transaction")
@@ -55,6 +56,7 @@ public class Transaction implements Comparable<Transaction>
         this.payerAccount = payerAccount;
         this.recipientAccount = recipientAccount;
         this.amount = amount;
+        this.moment = LocalDateTime.now();
     }
 
 
@@ -156,5 +158,20 @@ public class Transaction implements Comparable<Transaction>
     {
         return Comparator.comparing(Transaction::getMoment)
                          .compare(o, this);
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) return true;
+        if (!(o instanceof Transaction)) return false;
+        Transaction that = (Transaction) o;
+        return id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(id);
     }
 }

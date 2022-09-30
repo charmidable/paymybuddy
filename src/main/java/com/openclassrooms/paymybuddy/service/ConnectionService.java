@@ -1,5 +1,6 @@
 package com.openclassrooms.paymybuddy.service;
 
+import com.openclassrooms.paymybuddy.dto.AngularConnection;
 import com.openclassrooms.paymybuddy.entities.Connection;
 import com.openclassrooms.paymybuddy.repository.ConnectionRepository;
 import org.springframework.stereotype.Service;
@@ -32,5 +33,10 @@ public class ConnectionService
     public List<Connection> getAllConnections()
     {
         return connectionRepository.findAll();
+    }
+
+    public void newConnection(AngularConnection angularConnection)
+    {
+        connectionRepository.addConnection(angularConnection.clientId(), angularConnection.connectId());
     }
 }

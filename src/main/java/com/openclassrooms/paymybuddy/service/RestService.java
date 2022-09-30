@@ -1,8 +1,12 @@
 package com.openclassrooms.paymybuddy.service;
 
+import com.openclassrooms.paymybuddy.dto.AngularClient;
 import com.openclassrooms.paymybuddy.dto.AngularTransaction;
 import com.openclassrooms.paymybuddy.entities.Account;
+import com.openclassrooms.paymybuddy.entities.Client;
 import com.openclassrooms.paymybuddy.entities.Transaction;
+import com.openclassrooms.paymybuddy.repository.AuthorityRepository;
+import com.openclassrooms.paymybuddy.security.AuthenticationProviderService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,25 +15,52 @@ import java.math.BigDecimal;
 @Service
 public class RestService
 {
-    private final TransactionService transactionService;
-    private final AccountService accountService;
+    //==========================
+    //=      Attributes        =
+    //==========================
 
-    public RestService(TransactionService transactionService, AccountService accountService)
+    private final AuthenticationProviderService authenticationProviderService;
+    private final AuthorityService              authorityService;
+    private final TransactionService            transactionService;
+    private final AccountService                accountService;
+    private final ClientService                 clientService;
+
+
+    //==========================
+    //=      Constructor       =
+    //==========================
+
+    public RestService(AuthenticationProviderService authenticationProviderService, AuthorityService authorityService, TransactionService transactionService, AccountService accountService, ClientService clientService)
     {
-        this.transactionService = transactionService;
-        this.accountService = accountService;
+        this.authenticationProviderService  = authenticationProviderService;
+        this.transactionService             = transactionService;
+        this.authorityService               = authorityService;
+        this.accountService                 = accountService;
+        this.clientService                  = clientService;
     }
 
+
+    //==========================
+    //=    Service Methods     =
+    //==========================
+
     @Transactional
-    public void save(AngularTransaction angularTransaction)
+    public void createTransaction(AngularTransaction angularTransaction)
     {
         if(angularTransaction.payerAccountId() != angularTransaction.recipientAccountId())
         {
             Account payerAccount = accountService.getAccountById(angularTransaction.payerAccountId()).get();
             Account recipientAccount = accountService.getAccountById(angularTransaction.recipientAccountId()).get();
 
-            Transaction transaction = new Transaction(angularTransaction.amount(), angularTransaction.description(), payerAccount, recipientAccount);
-            payerAccount.setBalance(payerAccount.getBalance().subtract(angularTransaction.amount().multiply(BigDecimal.valueOf(1.05))));
+            Transaction transaction = new Transaction(
+                                                        angularTransaction.amount(),
+                                                        angularTransaction.description(),
+                                                        payerAccount,
+                                                        recipientAccount
+                                                     );
+
+            payerAccount.setBalance(payerAccount.getBalance().subtract(angularTransaction.amount().multiply(BigDecimal.valueOf(1.005))));
+
             recipientAccount.setBalance(recipientAccount.getBalance().add(angularTransaction.amount()));
 
             transactionService.save(transaction);
@@ -41,10 +72,40 @@ public class RestService
             Account payerAccount = accountService.getAccountById(angularTransaction.payerAccountId()).get();
 
             Transaction transaction = new Transaction(angularTransaction.amount(), angularTransaction.description(), payerAccount, payerAccount);
-            payerAccount.setBalance(payerAccount.getBalance().subtract(angularTransaction.amount()));
+
+            if(angularTransaction.description().equals("Deposit"))
+            {
+                payerAccount.setBalance(payerAccount.getBalance().add(angularTransaction.amount()));
+            }
+            else
+            {
+                payerAccount.setBalance(payerAccount.getBalance().subtract(angularTransaction.amount()));
+            }
 
             transactionService.save(transaction);
             accountService.save(payerAccount);
         }
+    }
+
+    @Transactional
+    public Account getTransactionsByAccountId(Integer accountId)
+    {
+        return accountService.getAccountById(accountId).get();
+    }
+
+
+    public boolean createClient(AngularClient angularClient)
+    {
+        Client client = Client.getNewClientWithAuthorityRoles();
+        client.setName(angularClient.name());
+        client.setEmail(angularClient.email());
+        client.setPassword(authenticationProviderService.encodePassword(angularClient.password()));
+        client.addAuthority(authorityService.findAuthorityByName("client").get());
+        clientService.save(client);
+        Account account = accountService.save(new Account(client));
+        accountService.save(account);
+        client.setAccount(account);
+        clientService.save(client);
+        return true;
     }
 }

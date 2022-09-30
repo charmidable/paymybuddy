@@ -5,12 +5,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name="client")
 public class Client
 {
+    //=========================
+    //=      Attributes       =
+    //=========================
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -33,11 +37,10 @@ public class Client
     @JoinTable
     (
         name               = "connection",
-        joinColumns        = @JoinColumn(name="connect"),
-        inverseJoinColumns = @JoinColumn(name="client")
+        joinColumns        = @JoinColumn(name="client"),
+        inverseJoinColumns = @JoinColumn(name="connect")
     )
     private List<Connection> connections;
-
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable
@@ -47,6 +50,46 @@ public class Client
         inverseJoinColumns = @JoinColumn(name="authority")
     )
     private List<Authority> roles;
+
+    //=========================
+    //=      Constructor      =
+    //=========================
+
+    public Client()
+    {
+    }
+
+    public static Client getNewClientWithAuthorityRoles()
+    {
+        Client client = new Client();
+        client.setRoles(new ArrayList<Authority>());
+        return client;
+    }
+
+
+    //===========================
+    //=     Business Method     =
+    //===========================
+
+    public void addAuthority(Authority authority)
+    {
+        this.getRoles().add(authority);
+    }
+
+
+    //===========================
+    //=  Data Transfert Method  =
+    //===========================
+
+    public List<Transaction> getTransactions()
+    {
+        return account.getTransactions();
+    }
+
+    public BigDecimal getBalance()
+    {
+        return account.getBalance();
+    }
 
 
     //=========================
@@ -121,11 +164,6 @@ public class Client
         return account.getId();
     }
 
-    public BigDecimal getBalance()
-    {
-        return account.getBalance();
-    }
-
     @JsonIgnore
     public List<Authority> getRoles()
     {
@@ -137,10 +175,6 @@ public class Client
         this.roles = role;
     }
 
-    public List<Transaction> getTransactions()
-    {
-        return account.getTransactions();
-    }
 
     //  =========================
     //  =    Object Methods     =

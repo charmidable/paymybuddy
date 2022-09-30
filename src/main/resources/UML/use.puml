@@ -1,0 +1,10 @@
+@startuml
+'https://plantuml.com/use-case-diagram
+
+Client ---> (Suscribe)
+Client ---> (Connect)
+Client ---> (Choose New Connection)
+Client ---> (Deposit Money)
+Client ---> (Withdrawal Money)
+Client ---> (Make a transaction)
+@enduml

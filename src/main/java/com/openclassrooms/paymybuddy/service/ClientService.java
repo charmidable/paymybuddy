@@ -35,4 +35,9 @@ public class ClientService
     {
         return clientRepository.findById(id);
     }
+
+    public Client save(Client client)
+    {
+        return clientRepository.save(client);
+    }
 }

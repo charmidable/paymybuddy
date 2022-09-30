@@ -1,11 +1,9 @@
 package com.openclassrooms.paymybuddy.service;
 
 import com.openclassrooms.paymybuddy.entities.Account;
-import com.openclassrooms.paymybuddy.entities.Transaction;
 import com.openclassrooms.paymybuddy.repository.AccountRepository;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.Optional;
 
 @Service
@@ -28,8 +26,8 @@ public class AccountService
        return accountRepository.findById(id);
     }
 
-    public void save(Account account)
+    public Account save(Account account)
     {
-        accountRepository.save(account);
+        return accountRepository.save(account);
     }
 }

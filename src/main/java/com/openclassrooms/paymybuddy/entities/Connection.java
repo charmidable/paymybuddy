@@ -23,25 +23,7 @@ public class Connection
 
 
     //=========================
-    //=     Constructors      =
-    //=========================
-
-
-    public Connection()
-    {
-    }
-
-//    public Connection(Integer id, String name, String email, Account account)
-//    {
-//        this.id = id;
-//        this.name = name;
-//        this.email = email;
-//        this.account = account;
-//    }
-
-
-    //=========================
-    //=   Getters & Setters   =
+    //=  Transfert Methods    =
     //=========================
 
     public String getName()
@@ -62,22 +44,5 @@ public class Connection
     public Integer getAccountId()
     {
         return account.getId();
-    }
-
-
-
-    //  =========================
-    //  =    Object Methods     =
-    //  =========================
-
-
-    @Override
-    public String toString()
-    {
-        return "Client{" +
-                "name= '" + name + '\'' +
-                "ClientId: "     + getClientId() +
-                "AccountId: "    + getAccountId() +
-                '}';
     }
 }

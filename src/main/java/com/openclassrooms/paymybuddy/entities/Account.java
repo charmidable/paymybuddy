@@ -1,5 +1,7 @@
 package com.openclassrooms.paymybuddy.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
@@ -30,10 +32,26 @@ public class Account
 
 
     //=========================
+    //=     Constructors      =
+    //=========================
+
+    public Account()
+    {
+        this.balance = BigDecimal.valueOf(0);
+    }
+
+    public Account(Client client)
+    {
+        this.balance = BigDecimal.valueOf(0);
+        this.client = client;
+    }
+
+
+    //=========================
     //=   Getters & Setters   =
     //=========================
 
-
+    @JsonIgnore
     public Integer getId()
     {
         return id;
@@ -43,7 +61,7 @@ public class Account
     {
         this.id = id;
     }
-
+    @JsonIgnore
     public Client getClient()
     {
         return client;
@@ -64,6 +82,8 @@ public class Account
         this.balance = amount;
     }
 
+
+    @JsonIgnore
     public List<Transaction> getPayers()
     {
         return payers;
@@ -74,65 +94,70 @@ public class Account
         this.payers = payers;
     }
 
+    @JsonIgnore
     public List<Transaction> getRecipients()
     {
         return recipients;
     }
+
 
     public void setRecipients(List<Transaction> recipients)
     {
         this.recipients = recipients;
     }
 
-//    public List<Transaction> getTransactions()
-//    {
-//        return Stream.concat(
-//                                recipients.stream().peek(transaction -> {
-//                                            if(transaction.getRecipientAccount().getId() != this.getId() )
-//                                            {
-//                                                transaction.setConnectionName(transaction.getRecipientAccount().getClient().getName());
-//                                            }
-//                                            else
-//                                            {
-//                                                transaction.setConnectionName("");
-//                                            }
-//                                    System.out.println(transaction.getConnectionName());
-//                                            transaction.setAmount(transaction.getTransactionAmount());
-//                                        }
-//                                ),
-//
-//                                payers    .stream().peek(transaction -> {
-//                                            if(transaction.getPayerAccount().getId() != this.getId() )
-//                                            {
-//                                                transaction.setConnectionName(transaction.getPayerAccount().getClient().getName());
-//                                            }
-//                                            else
-//                                            {
-//                                                transaction.setConnectionName("");
-//                                            }
-//                                    System.out.println(transaction.getConnectionName());
-//                                            transaction.setAmount(transaction.getTransactionAmount().negate());
-//                                        }
-//                                )
-//                        ).sorted()
-//                         .toList();
-//    }
+
+    //============================
+    //=  Data Transfert Methods  =
+    //============================
+
 
     public List<Transaction> getTransactions()
     {
-
         return Stream.concat(
                                 recipients.stream().peek(transaction -> {
-                                                                            transaction.setConnectionName(transaction.getRecipientAccount().getClient().getName());
-                                                                            transaction.setAmount(transaction.getTransactionAmount());
+                                                                            if(transaction.getRecipientAccount().getId() == transaction.getPayerAccount().getId())
+                                                                            {
+                                                                                transaction.setConnectionName("");
+
+                                                                                if(transaction.getDescription().equals("Withdrawal"))                                                                                {
+                                                                                    transaction.setAmount(transaction.getTransactionAmount().negate());
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    transaction.setAmount(transaction.getTransactionAmount());
+                                                                                }
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                transaction.setConnectionName(transaction.getPayerAccount().getClient().getName());
+                                                                                transaction.setAmount(transaction.getTransactionAmount());
+                                                                            }
                                                                         }),
 
                                 payers    .stream().peek(transaction -> {
-                                                                            transaction.setConnectionName(transaction.getRecipientAccount().getClient().getName());
-                                                                            transaction.setAmount(transaction.getTransactionAmount().negate());
+                                                                            if(transaction.getRecipientAccount().getId() == transaction.getPayerAccount().getId())
+                                                                            {
+                                                                                transaction.setConnectionName("");
+
+                                                                                if(transaction.getDescription().equals("Withdrawal"))
+                                                                                {
+                                                                                    transaction.setAmount(transaction.getTransactionAmount().negate());
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    transaction.setAmount(transaction.getTransactionAmount());
+                                                                                }
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                transaction.setConnectionName(transaction.getRecipientAccount().getClient().getName());
+                                                                                transaction.setAmount(transaction.getTransactionAmount().negate());
+                                                                            }
                                                                         }
                                                         )
                             ).sorted()
+                             .distinct()
                              .toList();
     }
 }

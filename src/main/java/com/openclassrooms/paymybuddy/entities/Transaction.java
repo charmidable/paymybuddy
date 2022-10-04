@@ -3,7 +3,6 @@ package com.openclassrooms.paymybuddy.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.Objects;
@@ -18,7 +17,7 @@ public class Transaction implements Comparable<Transaction>
     private Integer id;
 
     @Column(name = "amount")
-    private BigDecimal transactionAmount;
+    private float transactionAmount;
 
     @Column(name = "description")
     private String description;
@@ -38,7 +37,7 @@ public class Transaction implements Comparable<Transaction>
     private String connectionName;
 
     @Transient
-    private BigDecimal amount;
+    private float amount;
 
     //=========================
     //=     Constructors      =
@@ -49,7 +48,7 @@ public class Transaction implements Comparable<Transaction>
     {
     }
 
-    public Transaction(BigDecimal transactionAmount, String description, Account payerAccount, Account recipientAccount)
+    public Transaction(float transactionAmount, String description, Account payerAccount, Account recipientAccount)
     {
         this.transactionAmount = transactionAmount;
         this.description = description;
@@ -76,12 +75,12 @@ public class Transaction implements Comparable<Transaction>
     }
 
     @JsonIgnore
-    public BigDecimal getTransactionAmount()
+    public float getTransactionAmount()
     {
         return transactionAmount;
     }
 
-    public void setTransactionAmount(BigDecimal amount)
+    public void setTransactionAmount(float amount)
     {
         this.transactionAmount = amount;
     }
@@ -139,12 +138,12 @@ public class Transaction implements Comparable<Transaction>
         this.connectionName = connectionName;
     }
 
-    public BigDecimal getAmount()
+    public float getAmount()
     {
         return amount;
     }
 
-    public void setAmount(BigDecimal amount)
+    public void setAmount(float amount)
     {
         this.amount = amount;
     }

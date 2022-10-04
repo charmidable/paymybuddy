@@ -32,7 +32,6 @@ public class RestClientController
     //=      REST Methods      =
     //==========================
 
-
     @GetMapping("/{email}")
     @RolesAllowed("client")
     public Client getClient(@PathVariable("email") String email)
@@ -41,11 +40,11 @@ public class RestClientController
     }
 
 
-    @PostMapping()
+    @PostMapping("new")
     public boolean newclient(@RequestBody AngularClient angularClient)
     {
+        System.out.println("***** newclient CALLED ******");
         return restService.createClient(angularClient);
     }
-
 
 }

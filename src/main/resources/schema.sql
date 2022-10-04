@@ -47,9 +47,9 @@ CREATE TABLE role
 
 CREATE TABLE account
 (
-    id                       INT         NOT NULL AUTO_INCREMENT,
-    client                   INT         NOT NULL,
-    balance                  NUMERIC     NOT NULL,
+    id                       INT            NOT NULL AUTO_INCREMENT,
+    client                   INT            NOT NULL,
+    balance                  DECIMAL(10,5)  NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (client)     REFERENCES client(id)
 );
@@ -59,7 +59,7 @@ CREATE TABLE transaction
 (
     id                       INT           NOT NULL AUTO_INCREMENT,
     moment                   TIMESTAMP     NOT NULL,
-    amount                   NUMERIC       NOT NULL,
+    amount                   DECIMAL(10,5) NOT NULL,
     payer                    INT           NOT NULL,
     recipient                INT           NOT NULL,
     description              VARCHAR(45)   NOT NULL,

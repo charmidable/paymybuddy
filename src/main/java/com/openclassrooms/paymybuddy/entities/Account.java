@@ -22,7 +22,7 @@ public class Account
     private Client client;
 
     @Column(name = "balance")
-    private BigDecimal balance;
+    private float balance;
 
     @OneToMany(mappedBy = "payerAccount")
     private List<Transaction> payers;
@@ -37,12 +37,12 @@ public class Account
 
     public Account()
     {
-        this.balance = BigDecimal.valueOf(0);
+        this.balance = 0;
     }
 
     public Account(Client client)
     {
-        this.balance = BigDecimal.valueOf(0);
+        this.balance = 0;
         this.client = client;
     }
 
@@ -72,12 +72,12 @@ public class Account
         this.client = client;
     }
 
-    public BigDecimal getBalance()
+    public float getBalance()
     {
         return balance;
     }
 
-    public void setBalance(BigDecimal amount)
+    public void setBalance(float amount)
     {
         this.balance = amount;
     }
@@ -121,7 +121,7 @@ public class Account
                                                                                 transaction.setConnectionName("");
 
                                                                                 if(transaction.getDescription().equals("Withdrawal"))                                                                                {
-                                                                                    transaction.setAmount(transaction.getTransactionAmount().negate());
+                                                                                    transaction.setAmount(transaction.getTransactionAmount()*(-1));
                                                                                 }
                                                                                 else
                                                                                 {
@@ -142,7 +142,7 @@ public class Account
 
                                                                                 if(transaction.getDescription().equals("Withdrawal"))
                                                                                 {
-                                                                                    transaction.setAmount(transaction.getTransactionAmount().negate());
+                                                                                    transaction.setAmount(transaction.getTransactionAmount()*(-1));
                                                                                 }
                                                                                 else
                                                                                 {
@@ -152,7 +152,7 @@ public class Account
                                                                             else
                                                                             {
                                                                                 transaction.setConnectionName(transaction.getRecipientAccount().getClient().getName());
-                                                                                transaction.setAmount(transaction.getTransactionAmount().negate());
+                                                                                transaction.setAmount(transaction.getTransactionAmount()*(-1));
                                                                             }
                                                                         }
                                                         )

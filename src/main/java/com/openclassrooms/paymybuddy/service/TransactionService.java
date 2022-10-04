@@ -18,7 +18,6 @@ public class TransactionService
 
     public Transaction save(Transaction transaction)
     {
-        System.out.println("TransactionService.save CALLED");
         return transactionRepository.save(transaction);
     }
 }

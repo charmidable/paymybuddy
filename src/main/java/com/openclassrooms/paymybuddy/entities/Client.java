@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,7 +85,7 @@ public class Client
         return account.getTransactions();
     }
 
-    public BigDecimal getBalance()
+    public float getBalance()
     {
         return account.getBalance();
     }

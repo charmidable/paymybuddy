@@ -16,6 +16,7 @@ public class AuthenticationProviderService implements AuthenticationProvider
 {
     private final JpaUserDetailsService jpaUserDetailsService;
 
+
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
 
@@ -43,7 +44,7 @@ public class AuthenticationProviderService implements AuthenticationProvider
         return UsernamePasswordAuthenticationToken.class.isAssignableFrom(aClass);
     }
 
-    @Transactional
+
     Authentication checkPassword(SecurityUser user, String rawPassword)
     {
         if (encoder.matches(rawPassword, user.getPassword()))

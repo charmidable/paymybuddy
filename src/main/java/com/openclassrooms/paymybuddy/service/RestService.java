@@ -7,6 +7,7 @@ import com.openclassrooms.paymybuddy.entities.Client;
 import com.openclassrooms.paymybuddy.entities.Transaction;
 import com.openclassrooms.paymybuddy.repository.AuthorityRepository;
 import com.openclassrooms.paymybuddy.security.AuthenticationProviderService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -59,9 +60,9 @@ public class RestService
                                                         recipientAccount
                                                      );
 
-            payerAccount.setBalance(payerAccount.getBalance().subtract(angularTransaction.amount().multiply(BigDecimal.valueOf(1.005))));
+            payerAccount.setBalance(payerAccount.getBalance()-angularTransaction.amount()*1.005f);
 
-            recipientAccount.setBalance(recipientAccount.getBalance().add(angularTransaction.amount()));
+            recipientAccount.setBalance(recipientAccount.getBalance()+angularTransaction.amount());
 
             transactionService.save(transaction);
             accountService.save(payerAccount);
@@ -75,11 +76,15 @@ public class RestService
 
             if(angularTransaction.description().equals("Deposit"))
             {
-                payerAccount.setBalance(payerAccount.getBalance().add(angularTransaction.amount()));
+                System.out.println("DEPOSIT");
+                System.out.println("payerAccount.getBalance() : " + payerAccount.getBalance());
+                System.out.println("angularTransaction.amount() : " + angularTransaction.amount());
+                payerAccount.setBalance(payerAccount.getBalance() + angularTransaction.amount());
+                System.out.println("payerAccount.getBalance() : " + payerAccount.getBalance());
             }
             else
             {
-                payerAccount.setBalance(payerAccount.getBalance().subtract(angularTransaction.amount()));
+                payerAccount.setBalance(payerAccount.getBalance() - angularTransaction.amount());
             }
 
             transactionService.save(transaction);

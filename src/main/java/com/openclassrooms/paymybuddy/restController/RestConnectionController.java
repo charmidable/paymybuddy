@@ -34,10 +34,11 @@ public class RestConnectionController
     //=      REST Methods      =
     //==========================
 
-    @GetMapping
+
+    @GetMapping("all")
     public List<Connection> getAllConnections()
     {
-        System.out.println("RestConnectionController.getAllConnections() CALLED");
+        System.out.println("*** getAllConnections ***");
         return connectionService.getAllConnections();
     }
 
@@ -46,7 +47,7 @@ public class RestConnectionController
     @RolesAllowed("client")
     public String newConnection(@RequestBody AngularConnection angularConnection)
     {
-        System.out.println("RestConnectionController.newTransaction CALLED");
+        System.out.println("*** newConnection ***");
         connectionService.newConnection(angularConnection);
         return "{\"result\" : \"ok\"}";
     }

@@ -31,13 +31,6 @@ public class RestTransactionController
     //==========================
     //=      REST Methods      =
     //==========================
-//    @GetMapping("/{accountId}")
-//    public Object getTransactionsByAccountId(@PathVariable("accountId")Integer accountId)
-//    {
-//        System.out.println("getTransactionsByAccountId() CALLED");
-//
-//        return restService.getTransactionsByAccountId(accountId);
-//    }
 
     @PostMapping()
     @RolesAllowed("client")

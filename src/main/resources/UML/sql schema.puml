@@ -4,23 +4,6 @@
 !define column(x) <color:#efefef><&media-record></color> x
 !define table(x) entity x << (T, white) >>
 
-
-'table( user ) {
-'  primary_key( id ): UUID
-'  column( isActive ): BOOLEAN
-'  foreign_key( cityId ): INTEGER <<FK>>
-'}
-'table( city ) {
-'  primary_key( id ): UUID
-'  column( name ): CHARACTER VARYING
-'  column( country ): CHARACTER VARYING
-'  column( postCode ): INTEGER
-'}
-'
-'user }|--|| city
-
-
-
 table( client )
 {
     primary_key( id ): UUID <<PK>>
@@ -54,18 +37,18 @@ table( role )
 
 table( account )
 {
-    primary_key( id ):          UUID <<PK>>
-    column(banlance):           NUMERIC
+    primary_key( id ): UUID <<PK>>
+    column(banlance):DECIMAL
     foreign_key( client ):      INT <<FK>>
 }
 
 
 table( transaction )
 {
-    primary_key( id ):          UUID <<PK>>
-    column( moment ):           TIMESTAMP
-    column( amount ):           NUMERIC
-    column( description ):      VARCHAR
+    primary_key( id ): UUID <<PK>>
+    column( moment ):TIMESTAMP
+    column( amount ):DECIMAL
+    column( description ):VARCHAR
     foreign_key( payer ):       INT <<FK>>
     foreign_key( recipient ):   INT <<FK>>
 }

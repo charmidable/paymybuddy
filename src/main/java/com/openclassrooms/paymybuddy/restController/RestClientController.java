@@ -16,7 +16,7 @@ public class RestClientController
     //=      Attributes        =
     //==========================
     private final ClientService clientService;
-    private final RestService restService;
+    private final RestService   restService;
 
     //==========================
     //=      Constructor       =
@@ -43,8 +43,6 @@ public class RestClientController
     @PostMapping("new")
     public boolean newclient(@RequestBody AngularClient angularClient)
     {
-        System.out.println("***** newclient CALLED ******");
         return restService.createClient(angularClient);
     }
-
 }

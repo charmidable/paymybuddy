@@ -4,8 +4,6 @@ import com.openclassrooms.paymybuddy.entities.Transaction;
 import com.openclassrooms.paymybuddy.repository.TransactionRepository;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-
 @Service
 public class TransactionService
 {

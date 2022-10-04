@@ -1,6 +1,5 @@
 package com.openclassrooms.paymybuddy.security;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -8,7 +7,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
@@ -25,6 +23,7 @@ public class AuthenticationProviderService implements AuthenticationProvider
         this.jpaUserDetailsService = jpaUserDetailsService;
     }
 
+
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException
     {
@@ -37,6 +36,7 @@ public class AuthenticationProviderService implements AuthenticationProvider
 
         return checkPassword(user, password);
     }
+
 
     @Override
     public boolean supports(Class<?> aClass)
@@ -56,6 +56,7 @@ public class AuthenticationProviderService implements AuthenticationProvider
             throw new BadCredentialsException("Bad credentials");
         }
     }
+
 
     public String encodePassword(CharSequence rawPassword)
     {

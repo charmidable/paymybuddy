@@ -36,7 +36,6 @@ public class RestTransactionController
     @RolesAllowed("client")
     public Account newTransaction(@RequestBody AngularTransaction angularTransaction)
     {
-        System.out.println("RestTransactionController.newTransaction CALLED");
         restService.createTransaction(angularTransaction);
         return restService.getTransactionsByAccountId(angularTransaction.payerAccountId());
     }

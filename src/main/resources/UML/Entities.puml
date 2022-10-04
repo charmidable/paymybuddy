@@ -31,13 +31,13 @@ class Account
 {
     - Integer id
     - Client client
-    - BigDecimal balance
+    - float balance
     - List<Transaction> payers
     - List<Transaction> recipients
 
     + Integer getId()
     + Client getClient()
-    + BigDecimal getBalance()
+    + float getBalance()
     + List<Transaction> getPayers()
     + List<Transaction> getRecipients()
     + List<Transaction> getTransactions()
@@ -47,18 +47,18 @@ class Account
 class Transaction
 {
     - Integer id;
-    - BigDecimal transactionAmount;
+    - float transactionAmount;
     - String description;
     - LocalDateTime moment;
     - Account payerAccount;
     - Account recipientAccount;
     - String connectionName;
-    - BigDecimal amount;
+    - float amount;
 
     + Integer getId()
     + void setId(Integer id)
-    + BigDecimal getTransactionAmount()
-    + void setTransactionAmount(BigDecimal amount)
+    + float getTransactionAmount()
+    + void setTransactionAmount(float amount)
     + String getDescription()
     + void setDescription(String description)
     + Account getPayerAccount()
@@ -69,8 +69,8 @@ class Transaction
     + void setMoment(LocalDateTime moment)
     + String getConnectionName()
     + void setConnectionName(String connectionName)
-    + BigDecimal getAmount()
-    + void setAmount(BigDecimal amount)
+    + float getAmount()
+    + void setAmount(float amount)
 }
 
 
@@ -90,7 +90,7 @@ class Client
     + String getEmail()
     + Account getAccount()
     + Integer getAccountId()
-    + BigDecimal getBalance()
+    + float getBalance()
     + List<Authority> getRoles()
     + List<Connection> getConnections()
     + List<Transaction> getTransactions()

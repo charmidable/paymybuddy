@@ -2,7 +2,6 @@ package com.openclassrooms.paymybuddy.repository;
 
 
 import com.openclassrooms.paymybuddy.entities.Authority;
-import com.openclassrooms.paymybuddy.entities.Client;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;

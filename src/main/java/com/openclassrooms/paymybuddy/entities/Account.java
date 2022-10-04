@@ -111,7 +111,6 @@ public class Account
     //=  Data Transfert Methods  =
     //============================
 
-
     public List<Transaction> getTransactions()
     {
         return Stream.concat(

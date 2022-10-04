@@ -1,10 +1,8 @@
 package com.openclassrooms.paymybuddy.restController;
 
-import com.openclassrooms.paymybuddy.dto.AngularConnection;
-import com.openclassrooms.paymybuddy.dto.AngularTransaction;
-import com.openclassrooms.paymybuddy.entities.Account;
-import com.openclassrooms.paymybuddy.entities.Connection;
 import com.openclassrooms.paymybuddy.service.ConnectionService;
+import com.openclassrooms.paymybuddy.dto.AngularConnection;
+import com.openclassrooms.paymybuddy.entities.Connection;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
@@ -38,7 +36,6 @@ public class RestConnectionController
     @GetMapping("all")
     public List<Connection> getAllConnections()
     {
-        System.out.println("*** getAllConnections ***");
         return connectionService.getAllConnections();
     }
 
@@ -47,7 +44,6 @@ public class RestConnectionController
     @RolesAllowed("client")
     public String newConnection(@RequestBody AngularConnection angularConnection)
     {
-        System.out.println("*** newConnection ***");
         connectionService.newConnection(angularConnection);
         return "{\"result\" : \"ok\"}";
     }

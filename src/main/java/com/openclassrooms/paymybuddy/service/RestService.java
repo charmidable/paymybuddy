@@ -5,13 +5,9 @@ import com.openclassrooms.paymybuddy.dto.AngularTransaction;
 import com.openclassrooms.paymybuddy.entities.Account;
 import com.openclassrooms.paymybuddy.entities.Client;
 import com.openclassrooms.paymybuddy.entities.Transaction;
-import com.openclassrooms.paymybuddy.repository.AuthorityRepository;
 import com.openclassrooms.paymybuddy.security.AuthenticationProviderService;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.math.BigDecimal;
 
 @Service
 public class RestService
@@ -76,11 +72,7 @@ public class RestService
 
             if(angularTransaction.description().equals("Deposit"))
             {
-                System.out.println("DEPOSIT");
-                System.out.println("payerAccount.getBalance() : " + payerAccount.getBalance());
-                System.out.println("angularTransaction.amount() : " + angularTransaction.amount());
                 payerAccount.setBalance(payerAccount.getBalance() + angularTransaction.amount());
-                System.out.println("payerAccount.getBalance() : " + payerAccount.getBalance());
             }
             else
             {

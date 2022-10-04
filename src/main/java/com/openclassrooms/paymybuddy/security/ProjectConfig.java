@@ -9,7 +9,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Configuration
 public class ProjectConfig extends WebSecurityConfigurerAdapter
 {
-
     private final AuthenticationProviderService authenticationProvider;
 
     public ProjectConfig(AuthenticationProviderService authenticationProvider)
@@ -24,63 +23,10 @@ public class ProjectConfig extends WebSecurityConfigurerAdapter
     }
 
 
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception
-//    {
-//        String[] allowedGetRestController={"/api/test/testget"};
-//
-//        String[] allowedPostRestController={"/api/test/testpost"};
-//
-//        http.authorizeRequests()
-//            .mvcMatchers(HttpMethod.GET,  allowedGetRestController).permitAll()
-//            .mvcMatchers(HttpMethod.POST, allowedPostRestController).permitAll()
-//            .anyRequest().authenticated()
-//            .and()
-//            .httpBasic();
-//
-//        http.csrf().disable();
-//    }
-
-
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception
-//    {
-//        http.authorizeRequests()
-//            .mvcMatchers("/api/**").permitAll()
-//            .anyRequest().authenticated()
-//            .and()
-//            .httpBasic();
-//
-//        http.csrf().disable();
-//    }
-
-
-
-
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception
-//    {
-//        String[] allowedGetRestController={"/api/connections", "/api/basicAuth/validate"};
-//
-//        String[] allowedPostRestController={"/api/clients"};
-//
-//        http.authorizeRequests()
-//                .mvcMatchers(HttpMethod.GET,  "/api/connections").permitAll()
-//                .mvcMatchers(HttpMethod.GET,  "/api/basicAuth/validate").permitAll()
-//                .mvcMatchers(HttpMethod.POST, "/api/clients").permitAll()
-//                .anyRequest().authenticated()
-//                .and()
-//                .httpBasic();
-//
-//        http.csrf().disable();
-//    }
-
-
-
     @Override
     protected void configure(HttpSecurity http) throws Exception
     {
-        String[] allowedGetRestController={"/api/connections/all"/*, "/api/basicAuth/validate"*/};
+        String[] allowedGetRestController={"/api/connections/all"};
 
         String[] allowedPostRestController={"/api/clients/new"};
 
@@ -93,51 +39,6 @@ public class ProjectConfig extends WebSecurityConfigurerAdapter
                 .and()
                 .httpBasic();
 
-
-
-//        http.csrf().disable();
+        http.csrf().disable();
     }
-
-
-
-
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception
-//    {
-//        http.authorizeRequests()
-//            .mvcMatchers("/api/**").permitAll()
-//            .anyRequest().authenticated()
-//            .and()
-//            .httpBasic();
-//
-//        http.csrf().disable();
-//    }
-
-
-
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception
-//    {
-//        http.authorizeRequests()
-//            .mvcMatchers(HttpMethod.GET,  "api/test/testget").permitAll()
-//            .mvcMatchers(HttpMethod.POST, "api/test/testpost").permitAll()
-//            .anyRequest().authenticated()
-//            .and()
-//            .httpBasic();
-//
-//        http.csrf().disable();
-//    }
-
-
-//    String[] allowedEndPoint = {"api/connections", };
-
-//     httpSecurity.authorizeRequests()
-//             .antMatchers(HttpMethod.GET)
-//                    .permitAll() // Allow all GET requests to go unauthenticated
-//                    .antMatchers(allowedResources)
-//                    .permitAll() // Allow all requests to go unauthenticated for the specified paths
-//                    .antMatchers(protectedResources).hasRole(USER)
-//                    .antMatchers(adminResources).hasRole(ADMIN)
-//                    .anyRequest().authenticated(); // Authenticate all other request paths
-
 }
